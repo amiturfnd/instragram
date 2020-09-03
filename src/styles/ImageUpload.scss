@@ -1,0 +1,14 @@
+@import 'variables';
+
+.image-upload {
+    display: flex;
+    flex-direction: column;
+    width: 60%;
+    margin: 10px auto;
+
+    &__progress {
+        width: 100%;
+        background-color: #fff;
+        border-top: $app-border;
+    }
+}

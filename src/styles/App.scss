@@ -1,0 +1,39 @@
+@import 'variables';
+
+* {
+  margin: 0;
+}
+
+.app {
+  background-color: #fafafa;
+  min-height: 100vh;
+  max-width: 640px;
+  margin: 0 auto;
+
+  &__header {
+    background-color: #ffffff;
+    border-bottom: $app-border;
+    display: flex;
+    justify-content: space-between;
+    object-fit: contain;
+    padding: 20px;
+    position: sticky;
+    top: 0;
+    z-index: 1;
+
+    &-image {
+      object-fit: contain;
+    }
+  }
+
+  &__posts {
+    padding: 20px 8px;
+  }
+
+  &__footer {
+    position: sticky;
+    bottom: 0;
+    background-color: #ffffff;
+    padding: 12px 0;
+  }
+}

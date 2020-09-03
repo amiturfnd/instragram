@@ -1,0 +1,56 @@
+@import 'variables';
+
+.post {
+    border: $app-border;
+    max-width: 640px;
+    margin: 0 auto 45px;
+
+    &__header {
+        align-items: center;
+        display: flex;
+        padding: 12px 16px;
+    }
+
+    &__avatar {
+        margin-right: 10px;
+    }
+
+    &__image {
+        border-top: $app-border;
+        border-bottom: $app-border;
+        object-fit: contain;
+        width: 100%;
+    }
+
+    &__text {
+        font-weight: normal;
+        padding: 20px;
+    }
+
+    &__comments {
+        padding: 20px;
+    }
+
+    &__comment {
+        margin-bottom: 4px;
+    }
+
+    &__comment-box {
+        display: flex;
+        margin-top: 10px;
+
+    }
+    &__input {
+        flex: 1;
+        border: none;
+        border-top: $app-border;
+        padding: 10px;
+    }
+    &__button {
+        flex: 0;
+        border: none;
+        color: #6082a3;
+        background-color: transparent;
+        border-top: $app-border;
+    }
+}
