@@ -1,12 +1,11 @@
 import React, {useState, useEffect} from 'react';
 import './styles/App.scss';
-import Post from './Post';
 import {db, auth} from './firebase';
 import { makeStyles } from '@material-ui/core/styles';
 import { Input, Button, Modal } from '@material-ui/core';
-import Signup from './Signup';
-import Signin from './Signin';
-import ImageUpload from './ImageUpload'
+import Post from './components/Post';
+import Signup from './components/Signup';
+import ImageUpload from './components/ImageUpload';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -27,7 +26,7 @@ function App() {
   const [posts, setPosts] = useState([]);
   const classes = useStyles();
   const [openSignup, setOpenSignup] = React.useState(false);
-  const [openSignin, setOpenSignin] = React.useState(false);
+  const [isNewUser, setIsNewUser] = React.useState(false);
 
   useEffect(() => {
     db.collection('posts').orderBy("timestamp", "desc").onSnapshot(snapshot => {
@@ -39,7 +38,6 @@ function App() {
     const unsubscribe = auth.onAuthStateChanged(authUser => {
         if(authUser) {
             setUser(authUser);
-            setOpenSignin(false);
             setOpenSignup(false);
         } else {
             // user has logged out...
@@ -54,8 +52,7 @@ function App() {
 
   return (
     <div className="app">
-      {openSignup && <Signup user={user} setUser={setUser} setOpenSignup={setOpenSignup} classes={classes} />}
-      {openSignin && <Signin user={user} setUser={setUser} setOpenSignin={setOpenSignin} classes={classes} />}
+      {openSignup && <Signup user={user} setUser={setUser} setOpenSignup={setOpenSignup} classes={classes} isNewUser={isNewUser} />}
 
       <div className="app__header">
         <img src="https://www.instagram.com/static/images/web/mobile_nav_type_logo.png/735145cfe0a4.png" alt="logo" className="app__header-image"/>
@@ -63,8 +60,11 @@ function App() {
           <Button onClick={() => auth.signOut()}>Sign out</Button>
         ) : (
           <div className="app__login-container">
-            <Button onClick={() => setOpenSignin(true)}>Sign in</Button>
-            <Button onClick={() => setOpenSignup(true)}>Sign up</Button>
+            <Button onClick={() => setOpenSignup(true)}>Sign in</Button>
+            <Button onClick={() => {
+              setOpenSignup(true);
+              setIsNewUser(true);
+            }}>Sign up</Button>
           </div>
         )}
       </div>

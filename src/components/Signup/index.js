@@ -1,9 +1,9 @@
 import React from 'react';
 import { Input, Button, Modal } from '@material-ui/core';
-import {auth} from './firebase';
-import './styles/Signup.scss';
+import {auth} from '../../firebase';
+import './style.scss';
 
-function Signup({setOpenSignup, classes}) {
+function Signup({setOpenSignup, classes, isNewUser}) {
     const [username, setUsername] = React.useState("");
     const [email, setEmail] = React.useState("");
     const [password, setPassword] = React.useState("");
@@ -11,13 +11,19 @@ function Signup({setOpenSignup, classes}) {
     const signUp = (e) => {
         e.preventDefault();
 
-        auth.createUserWithEmailAndPassword(email, password)
-        .then(authUser => {
-            return authUser.user.updateProfile({
-                displayName: username
+        let signupPromise;
+
+        if (isNewUser) {
+            signupPromise = auth.createUserWithEmailAndPassword(email, password)
+            .then(authUser => {
+                return authUser.user.updateProfile({
+                    displayName: username
+                });
             });
-        })
-        .catch(err => alert(err.message)); 
+        } else {
+            signupPromise = auth.signInWithEmailAndPassword(email, password);
+        }
+        signupPromise.catch(err => alert(err.message));
     }
 
     return (
@@ -29,10 +35,10 @@ function Signup({setOpenSignup, classes}) {
                     <center>
                         <img src="https://www.instagram.com/static/images/web/mobile_nav_type_logo.png/735145cfe0a4.png" alt="logo" className="app__header-image"/>
                     </center>
-                    <Input type="text" placeholder="Username" value={username} onChange={e => setUsername(e.target.value)} />
+                    {isNewUser && <Input type="text" placeholder="Username" value={username} onChange={e => setUsername(e.target.value)} />}
                     <Input type="text" placeholder="email" value={email} onChange={e => setEmail(e.target.value)} />
                     <Input type="text" placeholder="password" value={password} onChange={e => setPassword(e.target.value)} />
-                    <Button type="submit">Sign up</Button>
+                    <Button type="submit">{isNewUser ? 'Sign up' : 'Sign in'}</Button>
                 </form>
             </div>
         </Modal>

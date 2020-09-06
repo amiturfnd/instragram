@@ -1,9 +1,8 @@
 import React, {useState, useEffect} from 'react';
 import firebase from "firebase";
-import {db} from './firebase';
-import './styles/Post.scss';
+import {db} from '../../firebase';
+import './style.scss';
 import Avatar from "@material-ui/core/Avatar"
-import { Button } from '@material-ui/core';
 
 function Post({postId, username, caption, imageUrl, user}) {
     const [comments, setComments] = useState([]);
